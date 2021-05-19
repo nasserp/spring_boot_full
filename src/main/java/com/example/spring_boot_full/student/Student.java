@@ -1,0 +1,100 @@
+package com.example.spring_boot_full.student;
+
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.Period;
+
+@Entity
+@Table
+public class Student {
+    @Id
+    @SequenceGenerator(
+            name = "student_sequence",
+            sequenceName = "student_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "student_sequence"
+    )
+    private Long id;
+    private String name;
+    private LocalDate dob;
+    private String emil;
+    @Transient
+    private Integer age;
+
+    public Student() {
+    }
+
+    public Student(Long id,
+                   String name,
+                   LocalDate dob,
+                   String emil) {
+        this.id = id;
+        this.name = name;
+        this.dob = dob;
+        this.emil = emil;
+    }
+
+    public Student(String name,
+                   LocalDate dob,
+                   String emil) {
+        this.name = name;
+        this.dob = dob;
+        this.emil = emil;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getDob() {
+        return dob;
+    }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public String getEmil() {
+        return emil;
+    }
+
+    public void setEmil(String emil) {
+        this.emil = emil;
+    }
+
+    public Integer getAge() {
+        return Period.between(this.dob,LocalDate.now()).getYears();
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dob=" + dob +
+                ", emil='" + emil + '\'' +
+                ", age=" + age +
+                '}';
+    }
+}
